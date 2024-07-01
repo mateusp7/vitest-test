@@ -6,7 +6,7 @@ import { FormEvent, useState } from "react";
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const disabledButton = !email && !password
+  const disabledButton = !email || !password
   const router = useRouter();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {

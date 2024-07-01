@@ -72,4 +72,33 @@ describe('test login page', () => {
 
     expect(mocks.mockedRouterPush).toHaveBeenCalledWith('/dashboard');
   })
+  it('should disabled button when email was filled and password was empty', async () => {
+    render(<Login />);
+    const emailInput = screen.getByRole('textbox', { name: /email/i });
+    const button = screen.getByRole('button');
+
+    await userEvent.type(emailInput, 'test@example.com');
+
+    expect(button).toBeDisabled();
+  })
+  it('should disabled button when email was empty and password was filled', async () => {
+    render(<Login />);
+    const passwordInput = screen.getByLabelText(/password/i);
+    const button = screen.getByRole('button');
+
+    await userEvent.type(passwordInput, '123456789');
+
+    expect(button).toBeDisabled();
+  })
+  it('should has a correctly text when user digit email and password', async () => {
+    render(<Login />);
+    const emailInput = screen.getByLabelText(/email/i);
+    const passwordInput = screen.getByLabelText(/password/i)
+
+    await userEvent.type(emailInput, 'test@example.com');
+    await userEvent.type(passwordInput, '123456789');
+
+    expect(emailInput).toHaveValue('test@example.com');
+    expect(passwordInput).toHaveValue('123456789');
+  })
 })
